@@ -8,13 +8,13 @@
 
 *  HOW TO RUN TESTS ON CI.
 
-- Due to issue in Build/Pipelines/ verify my account  at Gitlab project folder, 
-  not able to run in CI,  but .gitlab-ci.yml is already prepared for the job.
-- .github/workflows/playwright.yml is already prepared to run tests CI in GITHUB 
+  - Due to issue in Build/Pipelines/ verify my account  at Gitlab project folder, 
+    not able to run in CI,  but .gitlab-ci.yml is already prepared for the job.
+  - .github/workflows/playwright.yml is already prepared to run tests CI in GITHUB 
 
 
 *  HOW TO RUN TEST in DOCKER.
 
 - Dockerfile is prepared
 - run 'docker build -t sstasks .'
-- run 'docker run sstasks' 
+- run 'docker run sstasks'
