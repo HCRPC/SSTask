@@ -15,4 +15,4 @@
 
 - Dockerfile is prepared
 - run 'docker build -t sstasks .'
-- docker run sstasks 
+- run 'docker run sstasks' 
