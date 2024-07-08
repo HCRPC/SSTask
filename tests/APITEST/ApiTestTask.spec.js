@@ -2,9 +2,7 @@ import {test,expect} from '@playwright/test';
 import { ApiVerifications } from '../../pages/API/ApiVerifications';
 import { ApiRequests } from '../../pages/API/ApiRequests'; 
 
-const newUser = require('../../test-data/API/userPost.json')
 const updatedUser = require('../../test-data/API/userPatch.json')
-const root = require('../../test-data/API/root.json')
 
 var av = new ApiVerifications;
 const rq = new ApiRequests;
@@ -13,26 +11,21 @@ var id;
 let totalUser;
 
 
-test('Get Users', async ({request})=>{
+test('Get Users', async ()=>{
 
-    //const response = await rq.userGetRequest();
-    const response = await request.get(root.baseUrl);
+    const response = await rq.userGetRequest();
     const data = await response.json();
 
     totalUser = data.length;
     console.log(totalUser);
 
     av.verifyResponseSuccess(response);
-
 })
 
 
-test('Create User', async ({request})=>{
+test('Create User', async ()=>{
     
-    const response = await request.post(root.baseUrl,
-                        {
-                            data: newUser
-                        });
+    const response = await rq.userPostRequest();
 
     var data = await response.json();                    
     id = data.id
@@ -41,10 +34,12 @@ test('Create User', async ({request})=>{
     av.verifyResponseSuccess(response);
 })
 
-test('Get Specific User', async ({request})=>{
 
-    // 101 de sonuc dönmüyor dönerse newUser == response.json() la esitle kontrol et
-    const response = await request.get(root.baseUrl+ id);
+test.skip('Get Specific User', async ()=>{
+
+    // test is skipped since Create(POST) user cant generate an user in server!!!
+
+    const response = await rq.userGetByIdRequest(id);
     console.log( await response.json());
 
     av.verifyResponseSuccess(response);
@@ -52,11 +47,10 @@ test('Get Specific User', async ({request})=>{
 
 })
 
-test('Update Specific User', async ({request})=>{
 
-    const response = await request.patch(root.baseUrl + id ,{
-        data : updatedUser
-    });
+test('Update Specific User', async ()=>{
+
+    const response = await rq.userPatchRequest(id);
 
     const data = await response.json();
     const lastTitle = data.title;
@@ -66,19 +60,21 @@ test('Update Specific User', async ({request})=>{
 
 })
 
-test('Delete Specific User', async ({request})=>{
 
-    const response = await request.delete(root.baseUrl + id);
+test('Delete Specific User', async ()=>{
+
+    const response = await rq.userDeleteRequest(id);
     console.log( await response.json());
     av.verifyResponseSuccess(response);
 
-    const getResponse = await request.get(root.baseUrl + id);
+    const getResponse = await rq.userGetByIdRequest(id);
     av.verifyUserNotFound (getResponse);
 })
 
-test('Compare Get Users', async ({request})=>{
 
-    const response = await request.get(root.baseUrl);
+test('Compare Get Users', async ()=>{
+
+    const response = await rq.userGetRequest();
     av.verifyFieldValue(response, totalUser);
     
 })
