@@ -11,7 +11,7 @@
   not able to run in CI,  but .gitlab-ci.yml is already prepared for the job.
 - .github/workflows/playwright.yml is already prepared to run tests CI in GITHUB 
 
-* HOW TO RUN TEST in DOCKER
+* HOW TO RUN TEST in DOCKER.
 
 - Dockerfile is prepared
 - run 'docker build -t sstasks .'
